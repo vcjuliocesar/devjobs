@@ -9,7 +9,7 @@
                         <div class="bg-gray-300 text-gray-700 uppercase text-center py-3 px-6 mb-0">
                             {{ __('Register') }}
                         </div>
-                        <form class="py-10 px-5" method="POST" action="{{ route('register') }}">
+                        <form class="py-10 px-5" method="POST" action="{{ route('register') }}" novalidate>
                             @csrf
 
                             <div class="flex flex-wrap mb-6">
@@ -17,10 +17,10 @@
 
 
                                     <input id="name" type="text" class="p-3 bg-gray-200 rounded form-input w-full @error('name') is-invalid @enderror"
-                                        name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                        name="name" value="{{ old('name') }}"  autocomplete="name" autofocus>
 
                                     @error('name')
-                                        <span class="invalid-feedback" role="alert">
+                                        <span class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 w-full mt-5 text-sm" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -33,10 +33,10 @@
 
 
                                     <input id="email" type="email" class="p-3 bg-gray-200 rounded form-input w-full @error('email') is-invalid @enderror"
-                                        name="email" value="{{ old('email') }}" required autocomplete="email">
+                                        name="email" value="{{ old('email') }}"  autocomplete="email">
 
                                     @error('email')
-                                        <span class="invalid-feedback" role="alert">
+                                        <span class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 w-full mt-5 text-sm" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -50,10 +50,10 @@
 
                                     <input id="password" type="password"
                                         class="p-3 bg-gray-200 rounded form-input w-full @error('password') is-invalid @enderror" name="password"
-                                        required autocomplete="new-password">
+                                         autocomplete="new-password">
 
                                     @error('password')
-                                        <span class="invalid-feedback" role="alert">
+                                        <span class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 w-full mt-5 text-sm" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -66,7 +66,7 @@
 
 
                                     <input id="password-confirm" type="password" class="p-3 bg-gray-200 rounded form-input w-full"
-                                        name="password_confirmation" required autocomplete="new-password">
+                                        name="password_confirmation"  autocomplete="new-password">
 
                             </div>
 
