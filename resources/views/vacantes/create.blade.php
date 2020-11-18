@@ -61,9 +61,30 @@
             </select>
         </div>
 
-        <button
-            type="submit"
-            class="bg-teal-500 w-full hover:bg-teal-600 text-gray-100 p-3 focus:outlone-none focus:shadow-outlone uppercase font-bold"
-        >Publicar Vacante</button>
+        <div class="md-5">
+            <label
+                for="ubicacion"
+                class="block text-gray-100 text-sm mb-2"
+            >Ubicaciones</label>
+
+            <select
+                name="ubicacion"
+                id="ubicacion"
+                class="block appearance-none w-full
+                border border-gray-200 text-gray-700 rounded leading-tight
+                focus:outline-none focus:bg-white focus:border-gray-500 p-3 bg-gray-100"
+            >
+                <option disabled selected>- Selecciona -</option>
+                @foreach($ubicaciones as $ubicacion)
+                    <option id="{{$ubicacion->id}}">{{$ubicacion->nombre}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="md-5">
+            <button
+                type="submit"
+                class="bg-teal-500 w-full hover:bg-teal-600 text-gray-100 font-bold p-3 focus:outline focus:shadow-outline uppercase"
+            >Publicar Vacante</button>
+        </div>
     </form>
 @endsection
