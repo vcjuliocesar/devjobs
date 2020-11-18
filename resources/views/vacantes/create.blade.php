@@ -112,6 +112,7 @@
             >Descripción del Puesto</label>
 
             <div class="editable p-3 bg-gray-100 rounded form-input w-full text-gray-700"></div>
+            <input type="hidden" name="descripcion" id="descripcion">
         </div>
 
             <button
@@ -125,6 +126,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-editor/5.23.3/js/medium-editor.min.js" integrity="sha512-5D/0tAVbq1D3ZAzbxOnvpLt7Jl/n8m/YGASscHTNYsBvTcJnrYNiDIJm6We0RPJCpFJWowOPNz9ZJx7Ei+yFiA==" crossorigin="anonymous"></script>
     <script>
         document.addEventListener('DOMContentLoaded',() => {
+            // Medium Editor
             const editor =new MediumEditor('.editable',{
                 toolbar:{
                     buttons:['bold', 'italic', 'underline', 'quote', 'anchor', 'justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull',  'orderedlist', 'unorderedlist', 'h2', 'h3'],
@@ -134,7 +136,14 @@
                 placeholder:{
                     text:'Informacion de la vacante'
                 }
-            })
+            });
+
+            // Agrega al input hidden lo que el usuario escribe en medium editor
+            editor.subscribe('editableInput', function(eventObj, editable) {
+                const contenido = editor.getContent();
+                document.querySelector('#descripcion').value = contenido;
+            });
         });
+
     </script>
 @endsection
