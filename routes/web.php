@@ -24,3 +24,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Rutas de vacantes
 
 Route::get('/vacantes','VacanteController@index')->name('vacantes.index');
+Route::get('/vacantes/create','VacanteController@create')->name('vacantes.create');
