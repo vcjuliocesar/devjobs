@@ -20,7 +20,7 @@
                 name="titulo"
             >
         </div>
-
+        {{$categorias}}
         <button
             type="submit"
             class="bg-teal-500 w-full hover:bg-teal-600 text-gray-100 p-3 focus:outlone-none focus:shadow-outlone uppercase font-bold"
