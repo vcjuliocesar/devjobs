@@ -2,6 +2,7 @@
 
 @section('styles')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/medium-editor/5.23.3/css/medium-editor.min.css" integrity="sha512-zYqhQjtcNMt8/h4RJallhYRev/et7+k/HDyry20li5fWSJYSExP9O07Ung28MUuXDneIFg0f2/U3HJZWsTNAiw==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/basic.min.css" integrity="sha512-MeagJSJBgWB9n+Sggsr/vKMRFJWs+OUphiDV7TJiYu+TNQD9RtVJaPDYP8hA/PAjwRnkdvU+NsTncYTKlltgiw==" crossorigin="anonymous" />
 @endsection
 
 @section('navegacion')
@@ -109,10 +110,19 @@
             <label
                 for="descripcion"
                 class="block text-gray-700 text-sm mb-2"
-            >Descripción del Puesto</label>
+            >Descripción del Puesto: </label>
 
             <div class="editable p-3 bg-gray-100 rounded form-input w-full text-gray-700"></div>
             <input type="hidden" name="descripcion" id="descripcion">
+        </div>
+
+        <div class="mb-5">
+            <label
+                for="descripcion"
+                class="block text-gray-700 text-sm mb-2"
+            >Imagen Vacante: </label>
+
+            <div id="dropzoneDevJobs" class="dropzone rounded bg-gray-100"></div>
         </div>
 
             <button
@@ -124,7 +134,9 @@
 
 @section('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-editor/5.23.3/js/medium-editor.min.js" integrity="sha512-5D/0tAVbq1D3ZAzbxOnvpLt7Jl/n8m/YGASscHTNYsBvTcJnrYNiDIJm6We0RPJCpFJWowOPNz9ZJx7Ei+yFiA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.js" integrity="sha512-9WciDs0XP20sojTJ9E7mChDXy6pcO0qHpwbEJID1YVavz2H6QBz5eLoDD8lseZOb2yGT8xDNIV7HIe1ZbuiDWg==" crossorigin="anonymous"></script>
     <script>
+        Dropzone.autoDiscover = false;
         document.addEventListener('DOMContentLoaded',() => {
             // Medium Editor
             const editor =new MediumEditor('.editable',{
@@ -142,6 +154,11 @@
             editor.subscribe('editableInput', function(eventObj, editable) {
                 const contenido = editor.getContent();
                 document.querySelector('#descripcion').value = contenido;
+            });
+
+            //Dropzone
+            const dropzoneDevJobs = new Dropzone('#dropzoneDevJobs',{
+                url:"/vacantes/imagen"
             });
         });
 
