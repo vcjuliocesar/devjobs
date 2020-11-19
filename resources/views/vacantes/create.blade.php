@@ -176,10 +176,13 @@
 
                     //Coloca la respuesta del servidor en el input hidden
                     document.querySelector("#imagen").value=response.correcto;
+
+                    //Añadir al objeto de archivo el nombre del servisor
+                    file.nombreServisor = response.correcto;
                 },
-                error:function(file,response){
+                /*error:function(file,response){
                     document.querySelector("#error").textContent = 'Formato no válido';
-                },
+                },*/
                 maxfilesexceeded:function(file){
                     if(this.files[1] != null){
                         this.removeFile(this.files[0]);// elimina el archivo anterior
@@ -187,7 +190,12 @@
                     }
                 },
                 removedfile:function(file,response){
-                    console.log(file);
+                    file.previewElement.parentNode.removeChild(file.previewElement);
+                    params = {
+                        imagen:file.nombreServisor
+                    }
+                    axios.post('/vacantes/borrarimagen',params)
+                         .then(respuesta => console.log(respuesta));
                 }
             });
         });
