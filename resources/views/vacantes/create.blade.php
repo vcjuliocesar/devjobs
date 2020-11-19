@@ -123,6 +123,7 @@
             >Imagen Vacante: </label>
 
             <div id="dropzoneDevJobs" class="dropzone rounded bg-gray-100"></div>
+            <input type="hidden" id="imagen" name="imagen">
             <p id="error"></p>
         </div>
 
@@ -162,7 +163,7 @@
             const dropzoneDevJobs = new Dropzone('#dropzoneDevJobs',{
                 url:"/vacantes/imagen",
                 dictDefaultMessage:'Sube aqui tu archivo',
-                acceptedFiles:".png,.jpg,.jpeg,.gif,.bmg",
+                acceptedFiles:".png,.jpg,.jpeg,.gif,.bmp",
                 addRemoveLinks:true,
                 dictRemoveFile:'Borrar Archivo',
                 maxFiles:1,
@@ -172,6 +173,9 @@
                 success:function(file,response){
                     console.log(response);
                     document.querySelector("#error").textContent = '';
+
+                    //Coloca la respuesta del servidor en el input hidden
+                    document.querySelector("#imagen").value=response.correcto;
                 },
                 error:function(file,response){
                     document.querySelector("#error").textContent = 'Formato no válido';
