@@ -100,4 +100,12 @@ class VacanteController extends Controller
     {
         //
     }
+
+    //Campos extras
+
+    public function imagen(Request $request)
+    {
+        $imagen = $request->file('file');
+        return $imagen;
+    }
 }
