@@ -11,7 +11,8 @@
 
 @section('content')
     <h1 class="text-2xl text-center mt-10">Crear Vacante</h1>
-    <form class="max-w-lg mx-auto my-10" action="">
+    <form class="max-w-lg mx-auto my-10" action="{{route('vacantes.store')}}" method="POST">
+        @csrf
         <div class="mb-5">
             <label
                 for="titulo"
@@ -23,7 +24,15 @@
                 type="text"
                 class="p-3 bg-gray-100 rounded form-input w-full @error('titulo') border-red-500 border @enderror"
                 name="titulo"
+                placeholder="Titulo de la Vacante"
+                value="{{old('titulo')}}"
             >
+            @error('titulo')
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-3 mb-6" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <span class="block">{{$message}}</span>
+                </div>
+            @enderror
         </div>
         <div class="mb-5">
             <label
