@@ -173,12 +173,18 @@
 
         <div class="mb-5">
             <label
-                for="descripcion"
+                for="imagen"
                 class="block text-gray-700 text-sm mb-2"
             >Imagen Vacante: </label>
 
             <div id="dropzoneDevJobs" class="dropzone rounded bg-gray-100"></div>
-            <input type="hidden" id="imagen" name="imagen">
+            <input type="hidden" id="imagen" name="imagen" value="{{old("imagen")}}">
+            @error('imagen')
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-3 mb-6" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <span class="block">{{$message}}</span>
+                </div>
+            @enderror
             <p id="error"></p>
         </div>
 
@@ -240,6 +246,19 @@
                 headers:{
                     'X-CSRF-TOKEN':document.querySelector('meta[name=csrf-token]').content
                 },
+                init:function(){
+                    if(document.querySelector('#imagen').trim()){
+                        let imagenPublicada = {};
+                        imagenPublicada.size = 1234;
+                        imagenPublicada.name = document.querySelector('#imagen').value;
+
+                        this.options.addedfile.call(this,imagenPublicada);
+                        this.options.thumbnail.call(this,imagenPublicada,`/storage/vacantes/${imagenPublicada.name}`);
+
+                        imagenPublicada.previewElement.classList.add('dz-success');
+                        imagenPublicada.previewElement.classList.add('dz-complete');
+                    }
+                },
                 success:function(file,response){
                     console.log(response);
                     document.querySelector("#error").textContent = '';
@@ -262,7 +281,7 @@
                 removedfile:function(file,response){
                     file.previewElement.parentNode.removeChild(file.previewElement);
                     params = {
-                        imagen:file.nombreServisor
+                        imagen:file.nombreServisor ?? document.querySelector('#imagen').value
                     }
                     axios.post('/vacantes/borrarimagen',params)
                          .then(respuesta => console.log(respuesta));
