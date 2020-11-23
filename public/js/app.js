@@ -1934,10 +1934,21 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["skills"],
+  props: ["skills", "oldskills"],
   mounted: function mounted() {
-    console.log(this.skills);
+    document.querySelector('#skills').value = this.oldskills;
+  },
+  created: function created() {
+    var _this = this;
+
+    if (this.oldskills) {
+      var skillsArray = this.oldskills.split(',');
+      skillsArray.forEach(function (skill) {
+        return _this.habilidades.add(skill);
+      });
+    }
   },
   data: function data() {
     return {
@@ -1962,6 +1973,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       var stringHabilidades = _toConsumableArray(this.habilidades);
 
       document.querySelector('#skills').value = stringHabilidades;
+    },
+    verificarClaseActiva: function verificarClaseActiva(skill) {
+      return this.habilidades.has(skill) ? 'bg-teal-400' : '';
     }
   }
 });
@@ -37568,6 +37582,7 @@ var render = function() {
           {
             key: i,
             staticClass: "border border-gray-500 px-10 py-3 mb-3 rounded mr-4",
+            class: _vm.verificarClaseActiva(skill),
             on: {
               click: function($event) {
                 return _vm.activar($event)
