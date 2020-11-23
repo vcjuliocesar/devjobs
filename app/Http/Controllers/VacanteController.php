@@ -56,7 +56,11 @@ class VacanteController extends Controller
     {
         //validacion
         $data = $request->validate([
-            'titulo'=>'required|min:8'
+            'titulo'=>'required|min:8',
+            'categoria'=>'required',
+            'experiencia'=>'required',
+            'ubicacion'=>'required',
+            'salario'=>'required',
         ]);
         return 'desde store';
     }

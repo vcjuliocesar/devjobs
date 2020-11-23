@@ -50,9 +50,19 @@
             >
                 <option disabled selected>- Selecciona -</option>
                 @foreach($categorias as $categoria)
-                    <option id="{{$categoria->id}}">{{$categoria->nombre}}</option>
+                    <option
+                        id="{{$categoria->id}}"
+                        {{old("categoria") == $categoria->id ? 'selected' :''}}
+                        value="{{$categoria->id}}"
+                    >{{$categoria->nombre}}</option>
                 @endforeach
             </select>
+            @error('categoria')
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-3 mb-6" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <span class="block">{{$message}}</span>
+                </div>
+            @enderror
         </div>
         <div class="mb-5">
             <label
@@ -70,9 +80,19 @@
             >
                 <option disabled selected>- Selecciona -</option>
                 @foreach($experiencias as $experiencia)
-                    <option id="{{$experiencia->id}}">{{$experiencia->nombre}}</option>
+                    <option
+                        id="{{$experiencia->id}}"
+                        value="{{$experiencia->id}}"
+                        {{old('experiencia') == $experiencia->id ? 'selected':''}}
+                    >{{$experiencia->nombre}}</option>
                 @endforeach
             </select>
+            @error('experiencia')
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-3 mb-6" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <span class="block">{{$message}}</span>
+                </div>
+            @enderror
         </div>
 
         <div class="mb-5">
@@ -90,9 +110,19 @@
             >
                 <option disabled selected>- Selecciona -</option>
                 @foreach($ubicaciones as $ubicacion)
-                    <option id="{{$ubicacion->id}}">{{$ubicacion->nombre}}</option>
+                    <option
+                        id="{{$ubicacion->id}}"
+                        value="{{$ubicacion->id}}"
+                        {{old('ubicacion') == $ubicacion->id ? 'selected':''}}
+                    >{{$ubicacion->nombre}}</option>
                 @endforeach
             </select>
+            @error('ubicacion')
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-3 mb-6" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <span class="block">{{$message}}</span>
+                </div>
+            @enderror
         </div>
 
         <div class="mb-5">
@@ -110,9 +140,19 @@
             >
                 <option disabled selected>- Selecciona -</option>
                 @foreach($salarios as $salario)
-                    <option id="{{$salario->id}}">{{$salario->nombre}}</option>
+                    <option
+                        id="{{$salario->id}}"
+                        value="{{$salario->id}}"
+                        {{old('salario') == $salario->id ? 'selected':''}}
+                    >{{$salario->nombre}}</option>
                 @endforeach
             </select>
+            @error('salario')
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-3 mb-6" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <span class="block">{{$message}}</span>
+                </div>
+            @enderror
         </div>
 
         <div class="mb-5">
