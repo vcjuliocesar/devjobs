@@ -1,5 +1,9 @@
 @extends('layouts.app')
-
+@section('styles')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css"
+        integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA=="
+        crossorigin="anonymous" />
+@endsection
 @section('content')
     <h1 class="text-3xl text-center mt-10">{{ $vacante->titulo }}</h1>
 
@@ -27,10 +31,12 @@
             @endphp
             @foreach ($arraySkills as $arraySkills)
                 <p class="inline-block border border-gray-500 rounded py-2 px-8 text-gray-700 my-2">
-                    {{$arraySkills }}
+                    {{ $arraySkills }}
                 </p>
             @endforeach
-
+            <a href="/storage/vacantes/{{ $vacante->imagen }}" data-lightbox="imagen" data-title="{{ $vacante->titulo }}">
+                <img src="/storage/vacantes/{{ $vacante->imagen }}" alt="vacante" class="w-40 mt-10">
+            </a>
             <div class="descripcion mt-10 mb-5">
                 {!! $vacante->descripcion !!}
             </div>
