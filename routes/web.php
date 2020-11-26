@@ -17,22 +17,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes(['verify'=>true]);
+Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 //Rutas protegidas
 Route::group(['middleware' => ['auth', 'verified']], function () {
     // Rutas de vacantes
-    Route::get('/vacantes','VacanteController@index')->name('vacantes.index');
-    Route::get('/vacantes/create','VacanteController@create')->name('vacantes.create');
-    Route::post('/vacantes','VacanteController@store')->name('vacantes.store');
+    Route::get('/vacantes', 'VacanteController@index')->name('vacantes.index');
+    Route::get('/vacantes/create', 'VacanteController@create')->name('vacantes.create');
+    Route::post('/vacantes', 'VacanteController@store')->name('vacantes.store');
 
     //Subir Imagenes
-Route::post('/vacantes/imagen','VacanteController@imagen')->name('vacantes.imagen');
-Route::post('/vacantes/borrarimagen','VacanteController@borrarimagen')->name('vacantes.borra');
-
+    Route::post('/vacantes/imagen', 'VacanteController@imagen')->name('vacantes.imagen');
+    Route::post('/vacantes/borrarimagen', 'VacanteController@borrarimagen')->name('vacantes.borra');
 });
-//muestra los datos en la vista sin auth
-Route::get('/vacantes/{vacante}','VacanteController@show')->name('vacantes.show');
 
+//Enviar datos para una vacante
+Route::post('/candidatos','CandidatoController@store')->name('candidatos.store');
+
+//muestra los datos en la vista sin auth
+Route::get('/vacantes/{vacante}', 'VacanteController@show')->name('vacantes.show');
