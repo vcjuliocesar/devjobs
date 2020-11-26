@@ -15,9 +15,16 @@
             @endphp
             <li class="p-5 border border-gray-400 mb-5">
                 <p class="mb-4">
+                    Tienes escribió:
+                    <span class="font-bold"> {{$notificacion->created_at->diffForHumans()}}</span>
+                </p>
+                <p class="mb-4">
                     Tienes un nuevo candidato en :
                     <span class="font-bold"> {{$data['vacante']}}</span>
                 </p>
+                <a href="{{route('candidatos.index',['id'=>$data['id_vacante']])}}" class="bg-teal-500 p-3 inline-block text-xs font-bold text-white uppercasemb-4">
+                    Ver Candidato
+                </a>
             </li>
 
         @endforeach
