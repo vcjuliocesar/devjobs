@@ -78,7 +78,7 @@ class CandidatoController extends Controller
 
         //notificar al reclutador
         $reclutador = $vacante->reclutador;
-        $reclutador->notify(new NuevoCandidato());
+        $reclutador->notify(new NuevoCandidato($vacante->titulo));
         return back()->with('estado','Tus datos se enviaron correctamente!');
     }
 
