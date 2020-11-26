@@ -74,7 +74,7 @@ class CandidatoController extends Controller
             'email'=>$data['email'],
             'cv'=>$nombreArchivo,
         ]);
-        return back();
+        return back()->with('estado','Tus datos se enviaron correctamente!');
     }
 
     /**
