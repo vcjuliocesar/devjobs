@@ -1932,10 +1932,22 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "Si",
-        cancelButtonText: 'No'
+        cancelButtonText: "No"
       }).then(function (result) {
         if (result.isConfirmed) {
-          _this.$swal.fire("Vacante Eliminada", "Vacante eliminada correctamente", "success");
+          var params = {
+            id: _this.vacanteId,
+            _method: "delete"
+          }; //Envia peticicion axios
+
+          axios.post("/vacantes/".concat(_this.vacanteId), params).then(function (respuesta) {
+            _this.$swal.fire("Vacante Eliminada", respuesta.data.mensaje, "success"); //Eliminar del DOM
+
+
+            _this.$el.parentElement.parentElement.parentElement.removeChild(_this.$el.parentElement.parentElement);
+          })["catch"](function (error) {
+            console.log(error);
+          });
         }
       });
     }

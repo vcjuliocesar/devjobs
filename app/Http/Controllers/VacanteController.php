@@ -120,7 +120,8 @@ class VacanteController extends Controller
      */
     public function destroy(Vacante $vacante)
     {
-        //
+        $vacante->delete();
+        return response()->json(['mensaje'=>'Se elimino la vacante: '.$vacante->titulo]);
     }
 
     //Campos extras
