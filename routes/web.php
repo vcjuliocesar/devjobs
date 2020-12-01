@@ -28,6 +28,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/vacantes/create', 'VacanteController@create')->name('vacantes.create');
     Route::post('/vacantes', 'VacanteController@store')->name('vacantes.store');
     Route::delete('/vacantes/{vacante}','VacanteController@destroy')->name('vacantes.destroy');
+    Route::get('/vacantes/{vacante}/edit','VacanteController@edit')->name('vacantes.edit');
 
     //Subir Imagenes
     Route::post('/vacantes/imagen', 'VacanteController@imagen')->name('vacantes.imagen');
