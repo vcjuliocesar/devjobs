@@ -97,6 +97,8 @@ class VacanteController extends Controller
      */
     public function edit(Vacante $vacante)
     {
+        $this->authorize('view',$vacante);
+
         $categorias = Categoria::all();
         $experiencias = Experiencia::all();
         $ubicaciones = Ubicacion::all();
@@ -118,6 +120,7 @@ class VacanteController extends Controller
      */
     public function update(Request $request, Vacante $vacante)
     {
+        $this->authorize('update',$vacante);
          //validacion
          $data = $request->validate([
             'titulo'=>'required|min:8',
@@ -150,6 +153,8 @@ class VacanteController extends Controller
      */
     public function destroy(Vacante $vacante)
     {
+        $this->authorize('delete',$vacante);
+
         $vacante->delete();
         return response()->json(['mensaje'=>'Se elimino la vacante: '.$vacante->titulo]);
     }
