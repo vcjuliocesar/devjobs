@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-    <h1 class="text-2xl text-center mt-10">Crear Vacante</h1>
+    <h1 class="text-2xl text-center mt-10">Editando Vacante: {{$vacante->titulo}}</h1>
     <form class="max-w-lg mx-auto my-10" action="{{route('vacantes.store')}}" method="POST">
         @csrf
         <div class="mb-5">
@@ -25,7 +25,7 @@
                 class="p-3 bg-gray-100 rounded form-input w-full @error('titulo') border-red-500 border @enderror"
                 name="titulo"
                 placeholder="Titulo de la Vacante"
-                value="{{old('titulo')}}"
+                value="{{$vacante->titulo}}"
             >
             @error('titulo')
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-3 mb-6" role="alert">
@@ -52,7 +52,7 @@
                 @foreach($categorias as $categoria)
                     <option
                         id="{{$categoria->id}}"
-                        {{old("categoria") == $categoria->id ? 'selected' :''}}
+                        {{$vacante->categoria_id == $categoria->id ? 'selected' :''}}
                         value="{{$categoria->id}}"
                     >{{$categoria->nombre}}</option>
                 @endforeach
@@ -83,7 +83,7 @@
                     <option
                         id="{{$experiencia->id}}"
                         value="{{$experiencia->id}}"
-                        {{old('experiencia') == $experiencia->id ? 'selected':''}}
+                        {{$vacante->experiencia_id == $experiencia->id ? 'selected':''}}
                     >{{$experiencia->nombre}}</option>
                 @endforeach
             </select>
@@ -113,7 +113,7 @@
                     <option
                         id="{{$ubicacion->id}}"
                         value="{{$ubicacion->id}}"
-                        {{old('ubicacion') == $ubicacion->id ? 'selected':''}}
+                        {{$vacante->ubicacion_id == $ubicacion->id ? 'selected':''}}
                     >{{$ubicacion->nombre}}</option>
                 @endforeach
             </select>
@@ -143,7 +143,7 @@
                     <option
                         id="{{$salario->id}}"
                         value="{{$salario->id}}"
-                        {{old('salario') == $salario->id ? 'selected':''}}
+                        {{$vacante->salario_id == $salario->id ? 'selected':''}}
                     >{{$salario->nombre}}</option>
                 @endforeach
             </select>
@@ -162,7 +162,7 @@
             >Descripción del Puesto: </label>
 
             <div class="editable p-3 bg-gray-100 rounded form-input w-full text-gray-700"></div>
-        <input type="hidden" name="descripcion" id="descripcion" value="{{old('descripcion')}}">
+        <input type="hidden" name="descripcion" id="descripcion" value="{{$vacante->descripcion}}">
             @error('descripcion')
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-3 mb-6" role="alert">
                     <strong class="font-bold">Error!</strong>
@@ -178,7 +178,7 @@
             >Imagen Vacante: </label>
 
             <div id="dropzoneDevJobs" class="dropzone rounded bg-gray-100"></div>
-            <input type="hidden" id="imagen" name="imagen" value="{{old("imagen")}}">
+            <input type="hidden" id="imagen" name="imagen" value="{{ $vacante->imagen }}">
             @error('imagen')
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-3 mb-6" role="alert">
                     <strong class="font-bold">Error!</strong>
@@ -198,7 +198,7 @@
             @endphp
             <lista-skills
                 :skills="{{json_encode($skills)}}"
-                :oldskills="{{json_encode(old('skills'))}}"
+                :oldskills="{{json_encode($vacante->skills)}}"
             ></lista-skills>
             @error('skills')
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-3 mb-6" role="alert">
@@ -220,18 +220,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-editor/5.23.3/js/medium-editor.min.js" integrity="sha512-5D/0tAVbq1D3ZAzbxOnvpLt7Jl/n8m/YGASscHTNYsBvTcJnrYNiDIJm6We0RPJCpFJWowOPNz9ZJx7Ei+yFiA==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/min/dropzone.min.js" integrity="sha512-9WciDs0XP20sojTJ9E7mChDXy6pcO0qHpwbEJID1YVavz2H6QBz5eLoDD8lseZOb2yGT8xDNIV7HIe1ZbuiDWg==" crossorigin="anonymous"></script>
     <script>
+
         Dropzone.autoDiscover = false;
 
-        document.addEventListener('DOMContentLoaded',() => {
+        document.addEventListener('DOMContentLoaded', () => {
+
             // Medium Editor
-            const editor =new MediumEditor('.editable',{
-                toolbar:{
-                    buttons:['bold', 'italic', 'underline', 'quote', 'anchor', 'justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull',  'orderedlist', 'unorderedlist', 'h2', 'h3'],
-                    static:true,
-                    sticky:true
+            const editor = new MediumEditor('.editable', {
+                toolbar : {
+                    buttons: ['bold', 'italic', 'underline', 'quote', 'anchor', 'justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull',  'orderedlist', 'unorderedlist', 'h2', 'h3'],
+                    static: true,
+                    sticky: true
                 },
-                placeholder:{
-                    text:'Informacion de la vacante'
+                placeholder: {
+                    text: 'Información de la vacante'
                 }
             });
 
@@ -239,62 +241,66 @@
             editor.subscribe('editableInput', function(eventObj, editable) {
                 const contenido = editor.getContent();
                 document.querySelector('#descripcion').value = contenido;
-            });
-            //llena el editor con el contenido dein input hidden
-            editor.setContent(document.querySelector('#descripcion').value);
-            //Dropzone
-            const dropzoneDevJobs = new Dropzone('#dropzoneDevJobs',{
-                url:"/vacantes/imagen",
-                dictDefaultMessage:'Sube aqui tu archivo',
-                acceptedFiles:".png,.jpg,.jpeg,.gif,.bmp",
-                addRemoveLinks:true,
-                dictRemoveFile:'Borrar Archivo',
-                maxFiles:1,
-                headers:{
-                    'X-CSRF-TOKEN':document.querySelector('meta[name=csrf-token]').content
+            })
+
+            // Llena el editor con el contenido del input hidden
+            editor.setContent( document.querySelector('#descripcion').value );
+
+            // Dropzone
+            const dropzoneDevJobs = new Dropzone('#dropzoneDevJobs', {
+                url: "/vacantes/imagen",
+                dictDefaultMessage: 'Sube aquí tu archivo',
+                acceptedFiles: ".png,.jpg,.jpeg,.gif,.bmp",
+                addRemoveLinks: true,
+                dictRemoveFile: 'Borrar Archivo',
+                maxFiles: 1,
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content
                 },
-                init:function(){
-                    if(document.querySelector('#imagen').trim()){
-                        let imagenPublicada = {};
-                        imagenPublicada.size = 1234;
-                        imagenPublicada.name = document.querySelector('#imagen').value;
+                init: function() {
+                    if(document.querySelector('#imagen').value.trim() ) {
+                       let imagenPublicada = {};
+                       imagenPublicada.size = 1234;
+                       imagenPublicada.name = document.querySelector('#imagen').value;
+                       imagenPublicada.nombreServidor = document.querySelector('#imagen').value;
 
-                        this.options.addedfile.call(this,imagenPublicada);
-                        this.options.thumbnail.call(this,imagenPublicada,`/storage/vacantes/${imagenPublicada.name}`);
+                       this.options.addedfile.call(this, imagenPublicada);
+                       this.options.thumbnail.call(this, imagenPublicada, `/storage/vacantes/${imagenPublicada.name}`);
 
-                        imagenPublicada.previewElement.classList.add('dz-success');
-                        imagenPublicada.previewElement.classList.add('dz-complete');
+                       imagenPublicada.previewElement.classList.add('dz-sucess');
+                       imagenPublicada.previewElement.classList.add('dz-complete');
                     }
                 },
-                success:function(file,response){
-                    console.log(response);
-                    document.querySelector("#error").textContent = '';
+                success: function(file, response) {
+                    // console.log(file);
+                    // console.log(response);
+                    console.log(response.correcto);
+                    document.querySelector('#error').textContent = '';
 
-                    //Coloca la respuesta del servidor en el input hidden
-                    document.querySelector("#imagen").value=response.correcto;
+                    // Coloca la respuesta del servidor en el input hidden
+                    document.querySelector('#imagen').value = response.correcto;
 
-                    //Añadir al objeto de archivo el nombre del servisor
-                    file.nombreServisor = response.correcto;
+                    // Añadir al objeto de archivo el nombre del servidor
+                    file.nombreServidor = response.correcto;
                 },
-                /*error:function(file,response){
-                    document.querySelector("#error").textContent = 'Formato no válido';
-                },*/
-                maxfilesexceeded:function(file){
-                    if(this.files[1] != null){
-                        this.removeFile(this.files[0]);// elimina el archivo anterior
+                maxfilesexceeded: function(file) {
+                    if( this.files[1] != null ) {
+                        this.removeFile(this.files[0]); // eliminar el archivo anterior
                         this.addFile(file); // Agregar el nuevo archivo
                     }
                 },
-                removedfile:function(file,response){
+                removedfile: function(file, response) {
                     file.previewElement.parentNode.removeChild(file.previewElement);
+
                     params = {
-                        imagen:file.nombreServisor ?? document.querySelector('#imagen').value
+                        imagen: file.nombreServidor
                     }
-                    axios.post('/vacantes/borrarimagen',params)
-                         .then(respuesta => console.log(respuesta));
+
+                    axios.post('/vacantes/borrarimagen', params )
+                        .then(respuesta => console.log(respuesta))
                 }
             });
-        });
 
+        })
     </script>
 @endsection

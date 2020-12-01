@@ -105,7 +105,8 @@ class VacanteController extends Controller
                     ->with('categorias', $categorias)
                     ->with('experiencias',$experiencias)
                     ->with('ubicaciones',$ubicaciones)
-                    ->with('salarios',$salarios);
+                    ->with('salarios',$salarios)
+                    ->with('vacante',$vacante);
     }
 
     /**
