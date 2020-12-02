@@ -33,6 +33,7 @@
             Nuevas
             <span class="font-bold">Vacantes</span>
         </h1>
+        @include('ui.listadovacantes')
     </div>
 
 
