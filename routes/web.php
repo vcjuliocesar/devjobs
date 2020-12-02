@@ -48,3 +48,8 @@ Route::post('/candidatos','CandidatoController@store')->name('candidatos.store')
 
 //muestra los datos en la vista sin auth
 Route::get('/vacantes/{vacante}', 'VacanteController@show')->name('vacantes.show');
+
+// Muestra los trabajos en el front end sin autenticación
+Route::get('/busqueda/buscar', 'VacanteController@resultados')->name('vacantes.resultados');
+Route::post('/busqueda/buscar', 'VacanteController@buscar')->name('vacantes.buscar');
+Route::get('/vacantes/{vacante}', 'VacanteController@show')->name('vacantes.show');
