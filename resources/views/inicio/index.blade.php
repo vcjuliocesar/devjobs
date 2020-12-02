@@ -17,6 +17,7 @@
                 <span class="text-teal-500 block">Para Desarrolladores / Diseñadores Web</span>
             </h1>
 
+            @include('ui.buscar')
 
 
 
